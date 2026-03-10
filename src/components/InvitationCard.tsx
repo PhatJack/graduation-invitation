@@ -1,9 +1,26 @@
 import {
   IconMapPin,
   IconPhone,
+  IconDownload,
   IconStarFilled,
   IconNorthStar,
 } from "@tabler/icons-react"
+
+const escapeXml = (value: string) =>
+  value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;")
+
+const slugify = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase() || "khach-moi"
 
 const GoldDivider = () => (
   <div className="flex w-full items-center gap-3">
@@ -63,9 +80,121 @@ const CornerOrnament = ({
 }
 
 export function InvitationCard({ name }: { name: string }) {
+  const handleDownloadTicket = async () => {
+    const safeName = escapeXml(name)
+    const localDancingScriptFont = `${window.location.origin}/fonts/DancingScript-VariableFont_wght.ttf`
+    const ticketSvg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="620" viewBox="0 0 1400 620">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fff8e6"/>
+      <stop offset="55%" stop-color="#fff2cc"/>
+      <stop offset="100%" stop-color="#ffe9b3"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c2d12"/>
+      <stop offset="50%" stop-color="#c2410c"/>
+      <stop offset="100%" stop-color="#7c2d12"/>
+    </linearGradient>
+    <style>
+      @font-face {
+        font-family: 'Dancing Script';
+        src: url('${localDancingScriptFont}') format('truetype');
+        font-style: normal;
+        font-weight: 700;
+      }
+      .title { font: 700 52px 'Arial'; fill: #7c2d12; letter-spacing: 2px; }
+      .label { font: 600 20px 'Arial'; fill: #b45309; letter-spacing: 1.2px; }
+      .value { font: 700 34px 'Arial'; fill: #78350f; }
+      .small { font: 600 18px 'Arial'; fill: #92400e; }
+      .name { font: 700 64px 'Dancing Script', 'Arial', cursive; fill: #7c2d12; }
+      .mono { font: 700 20px 'Courier New'; fill: #7c2d12; letter-spacing: 2px; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="620" fill="#f8e8c4" />
+  <rect x="40" y="40" width="1320" height="540" rx="28" fill="url(#bg)" stroke="#d97706" stroke-width="3" />
+  <rect x="40" y="40" width="1320" height="18" fill="url(#accent)"/>
+  <rect x="40" y="562" width="1320" height="18" fill="url(#accent)"/>
+
+  <circle cx="920" cy="310" r="18" fill="#f8e8c4" stroke="#d97706" stroke-width="2"/>
+  <circle cx="1320" cy="310" r="18" fill="#f8e8c4" stroke="#d97706" stroke-width="2"/>
+
+  <line x1="940" y1="310" x2="1300" y2="310" stroke="#d97706" stroke-width="2" stroke-dasharray="8 10"/>
+
+  <text x="86" y="180" class="title">THƯ MỜI TỐT NGHIỆP</text>
+  <text x="86" y="250" class="label">KHÁCH MỜI</text>
+  <text x="86" y="330" class="name">${safeName}</text>
+
+  <text x="86" y="395" class="small">Trường Đại học Sài Gòn</text>
+  <text x="86" y="430" class="small">273 An Dương Vương, phường Chợ Quán</text>
+  <text x="86" y="465" class="small">Thời gian: Thứ Bảy - 13:30 - 14/03/2026</text>
+  <text x="86" y="500" class="small">Liên hệ: Nguyễn Tiến Phát - 0344 248 396</text>
+
+  <text x="980" y="128" class="label">VÉ MỜI</text>
+  <text x="980" y="176" class="value">LỄ TỐT NGHIỆP</text>
+
+  <rect x="980" y="210" width="300" height="180" rx="14" fill="#fff8e6" stroke="#d97706" stroke-width="2"/>
+  <text x="1002" y="248" class="small">Ngày: 14/03/2026</text>
+  <text x="1002" y="285" class="small">Giờ: 13:30</text>
+  <text x="1002" y="322" class="small">Địa điểm: SGU</text>
+  <text x="1002" y="359" class="small">Trang phục: Lịch sự</text>
+
+  <text x="980" y="450" class="label">MÃ VÉ</text>
+  <text x="980" y="490" class="mono">SGU-2026-14M03-1330</text>
+
+  <rect x="980" y="515" width="300" height="35" fill="#7c2d12"/>
+  <text x="995" y="539" style="font:700 18px 'Arial';fill:#fff;letter-spacing:3px;">||| || |||| | ||| || ||||</text>
+</svg>`
+
+    const svgBlob = new Blob([ticketSvg.trim()], {
+      type: "image/svg+xml;charset=utf-8",
+    })
+    const svgUrl = URL.createObjectURL(svgBlob)
+
+    try {
+      const img = new Image()
+      img.decoding = "async"
+
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve()
+        img.onerror = () => reject(new Error("Không thể render vé"))
+        img.src = svgUrl
+      })
+
+      const canvas = document.createElement("canvas")
+      canvas.width = 1400
+      canvas.height = 620
+      const ctx = canvas.getContext("2d")
+      if (!ctx) throw new Error("Không thể khởi tạo canvas")
+
+      ctx.fillStyle = "#f8e8c4"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
+
+      const pngBlob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/png", 1)
+      )
+      if (!pngBlob) throw new Error("Không thể tạo file PNG")
+
+      const pngUrl = URL.createObjectURL(pngBlob)
+      const link = document.createElement("a")
+      link.href = pngUrl
+      link.download = `ve-moi-${slugify(name)}.png`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(pngUrl)
+    } catch {
+      alert("Không thể tải ticket PNG. Vui lòng thử lại.")
+    } finally {
+      URL.revokeObjectURL(svgUrl)
+    }
+  }
+
   return (
     <div
-      className="flex h-svh max-h-svh min-h-svh items-center justify-center"
+      className="flex h-svh max-h-svh min-h-svh items-center justify-center font-[Arial]"
       style={{
         background:
           "linear-gradient(135deg, #fdf6e3 0%, #fef9ee 50%, #fdf0d0 100%)",
@@ -103,7 +232,7 @@ export function InvitationCard({ name }: { name: string }) {
         <CornerOrnament position="bl" />
         <CornerOrnament position="br" />
 
-        <div className="relative z-10 flex flex-col items-center gap-6 px-8 py-10 text-center">
+        <div className="relative z-10 flex flex-col items-center gap-4 px-8 py-10 text-center">
           {/* Header badge */}
           <div
             className="flex items-center gap-2 rounded-full px-5 py-1.5 font-semibold tracking-wide text-[#92400e] uppercase"
@@ -175,8 +304,8 @@ export function InvitationCard({ name }: { name: string }) {
               </p>
             </div>
 
-            <div className="grid w-full grid-cols-3 overflow-hidden border-y border-[rgba(180,83,9,0.2)]">
-              <div className="flex flex-col items-center justify-center gap-0.5 px-3 py-4">
+            <div className="grid w-full grid-cols-3 grid-rows-3 overflow-hidden border-y border-[rgba(180,83,9,0.2)]">
+              <div className="row-span-3 grid grid-rows-subgrid px-3 py-4">
                 <p
                   className="text-xs tracking-wider uppercase"
                   style={{ color: "#b45309" }}
@@ -184,13 +313,14 @@ export function InvitationCard({ name }: { name: string }) {
                   Thứ
                 </p>
                 <p
-                  className="text-lg leading-tight font-bold"
+                  className="text-2xl leading-tight font-bold"
                   style={{ color: "#78350f" }}
                 >
                   Bảy
                 </p>
+                <p></p>
               </div>
-              <div className="flex flex-col items-center justify-center gap-0.5 border-x border-[rgba(180,83,9,0.15)] bg-[rgba(245,158,11,0.1)] px-3 py-4">
+              <div className="row-span-3 grid grid-rows-subgrid border-x border-[rgba(180,83,9,0.15)] bg-[rgba(245,158,11,0.1)] px-3 py-4">
                 <p
                   className="text-xs tracking-wider uppercase"
                   style={{ color: "#b45309" }}
@@ -198,7 +328,7 @@ export function InvitationCard({ name }: { name: string }) {
                   Ngày
                 </p>
                 <p
-                  className="text-2xl leading-none font-bold"
+                  className="text-2xl leading-tight tracking-wider font-bold"
                   style={{ color: "#92400e" }}
                 >
                   14/3
@@ -210,7 +340,7 @@ export function InvitationCard({ name }: { name: string }) {
                   2026
                 </p>
               </div>
-              <div className="flex flex-col items-center justify-center gap-0.5 px-3 py-4">
+              <div className="row-span-3 grid grid-rows-subgrid px-3 py-4">
                 <p
                   className="text-xs tracking-wider uppercase"
                   style={{ color: "#b45309" }}
@@ -218,11 +348,12 @@ export function InvitationCard({ name }: { name: string }) {
                   Giờ
                 </p>
                 <p
-                  className="text-lg leading-tight font-bold"
+                  className="text-2xl leading-tight font-bold"
                   style={{ color: "#78350f" }}
                 >
                   13:30
                 </p>
+                <p></p>
               </div>
             </div>
 
@@ -287,6 +418,13 @@ export function InvitationCard({ name }: { name: string }) {
           >
             ✦ Sự hiện diện của bạn là niềm vinh hạnh lớn nhất ✦
           </p>
+          <button
+            onClick={handleDownloadTicket}
+            className="inline-flex cursor-pointer items-center gap-2 rounded-full border border-amber-700/30 bg-amber-700 px-5 py-2 text-sm font-semibold text-amber-50 transition hover:bg-amber-800"
+          >
+            <IconDownload size={16} />
+            Tải vé
+          </button>
         </div>
       </div>
     </div>

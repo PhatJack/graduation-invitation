@@ -3,6 +3,14 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/public-sans";
 
+@font-face {
+  font-family: "Dancing Script";
+  src: url("/fonts/DancingScript-VariableFont_wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 :root {

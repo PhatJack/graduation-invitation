@@ -366,7 +366,7 @@ export function ScrollIntro({ name, onOpen, isOpening }: ScrollIntroProps) {
       <button
         onClick={onOpen}
         disabled={isOpening}
-        className="relative z-10 mt-7 rounded-full border border-[rgba(180,83,9,0.15)] bg-[linear-gradient(135deg,#b45309,#d97706_55%,#f59e0b)] px-10 py-3 text-[0.75rem] font-bold tracking-[0.22em] text-amber-50 uppercase shadow-[0_4px_24px_rgba(180,83,9,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-opacity outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        className="relative z-10 mt-7 cursor-pointer rounded-full border border-[rgba(180,83,9,0.15)] bg-[linear-gradient(135deg,#b45309,#d97706_55%,#f59e0b)] px-10 py-3 text-[0.75rem] font-bold tracking-[0.22em] text-amber-50 uppercase shadow-[0_4px_24px_rgba(180,83,9,0.4),inset_0_1px_0_rgba(255,255,255,0.12)] transition-opacity outline-none disabled:cursor-not-allowed disabled:opacity-50"
       >
         ✦ &nbsp;Mở Thư Mời&nbsp; ✦
       </button>

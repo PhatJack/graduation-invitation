@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { ScrollIntro } from "./components/ScrollIntro"
 import { InvitationCard } from "./components/InvitationCard"
 
@@ -6,6 +6,7 @@ type Phase = "intro" | "opening" | "card"
 
 export function App() {
   const [phase, setPhase] = useState<Phase>("intro")
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   const name = useMemo(
     () => new URLSearchParams(window.location.search).get("name") || "Bạn",
@@ -46,6 +47,37 @@ export function App() {
     upsertMetaByName("twitter:title", pageTitle)
     upsertMetaByName("twitter:description", description)
   }, [name])
+
+  useEffect(() => {
+    const audio = new Audio("/song.mp3")
+    audio.loop = true
+    audio.volume = 0.45
+    audioRef.current = audio
+
+    const tryPlay = () => {
+      audio
+        .play()
+        .then(() => {
+          window.removeEventListener("pointerdown", tryPlay)
+          window.removeEventListener("keydown", tryPlay)
+        })
+        .catch(() => {
+          // Autoplay may be blocked; first user gesture will retry.
+        })
+    }
+
+    tryPlay()
+    window.addEventListener("pointerdown", tryPlay)
+    window.addEventListener("keydown", tryPlay)
+
+    return () => {
+      window.removeEventListener("pointerdown", tryPlay)
+      window.removeEventListener("keydown", tryPlay)
+      audio.pause()
+      audio.currentTime = 0
+      audioRef.current = null
+    }
+  }, [])
 
   const handleOpen = () => {
     setPhase("opening")
