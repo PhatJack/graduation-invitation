@@ -232,7 +232,7 @@ export function InvitationCard({ name }: { name: string }) {
         <CornerOrnament position="bl" />
         <CornerOrnament position="br" />
 
-        <div className="relative z-10 flex flex-col items-center gap-4 px-8 py-10 text-center">
+        <div className="relative z-10 flex flex-col items-center gap-4 px-4 sm:px-8 py-10 text-center">
           {/* Header badge */}
           <div
             className="flex items-center gap-2 rounded-full px-5 py-1.5 font-semibold tracking-wide text-[#92400e] uppercase"

@@ -345,15 +345,15 @@ export function ScrollIntro({ name, onOpen, isOpening }: ScrollIntroProps) {
       <div ref={mountRef} className="relative z-10 h-65 w-full shrink-0" />
 
       {/* Intro text */}
-      <div className="relative z-10 -mt-1 flex flex-col items-center gap-3 px-10 text-center">
+      <div className="relative z-10 -mt-1 flex flex-col items-center gap-3 px-4 sm:px-10 text-center">
         <p className="m-0 text-[11px] tracking-[0.3em] text-amber-700 uppercase">
           ✦ Thư Mời ✦
         </p>
-        <h1 className="m-0 font-sans text-4xl text-amber-900">
+        <h1 className="m-0 font-sans text-3xl sm:text-4xl text-amber-900">
           Lễ Trao Bằng Tốt Nghiệp
         </h1>
         <div className="h-px w-45 bg-linear-to-r from-transparent via-amber-700 to-transparent" />
-        <p className="m-0 text-[0.85rem] text-amber-800">Kính gửi:</p>
+        <p className="m-0 text-[0.85rem] text-amber-800">Thân mời:</p>
         <p
           style={{ fontFamily: "'Dancing Script', cursive" }}
           className="m-0 text-4xl font-bold tracking-tight text-amber-900"
