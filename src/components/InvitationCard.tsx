@@ -194,7 +194,7 @@ export function InvitationCard({ name }: { name: string }) {
 
   return (
     <div
-      className="flex h-svh max-h-svh min-h-svh items-center justify-center font-[Arial]"
+      className="flex sm:h-svh sm:max-h-svh min-h-svh items-center justify-center font-[Arial]"
       style={{
         background:
           "linear-gradient(135deg, #fdf6e3 0%, #fef9ee 50%, #fdf0d0 100%)",
