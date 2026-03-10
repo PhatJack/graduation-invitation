@@ -94,7 +94,7 @@ export function App() {
     >
       {/* === CARD layer (underneath) === */}
       <div
-        className="absolute inset-0 overflow-y-hidden"
+        className="absolute inset-0 overflow-y-auto sm:overflow-y-hidden"
         style={{
           opacity: phase === "intro" ? 0 : 1,
           transform: phase === "intro" ? "translateY(40px)" : "translateY(0)",
