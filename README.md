@@ -1,21 +1,27 @@
-# React + TypeScript + Vite + shadcn/ui
+# 🎓 Graduation Invitation
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+This project is an electronic graduation invitation website for **Nguyễn Tiến Phát** at Saigon University. The website is built with React, TypeScript, Vite, Tailwind CSS v4, and features integrated 3D effects (Three.js).
 
-## Adding components
+👉 **[Live Demo](https://jackphat-graduation-invitation.vercel.app/)**
 
-To add components to your app, run the following command:
+---
 
-```bash
-npx shadcn@latest add button
+## 📖 Summary
+
+The website serves as an online e-invitation with a modern style, offering a personalized experience for each guest. Invitees will see their own names on the invitation by passing a parameter in the URL.
+
+---
+
+## 🚀 Usage
+
+### Send a Personalized Invitation
+You can generate a personalized link for the people you want to invite by adding the `?name=` parameter to the end of the website's URL.
+
+**Syntax:**
+```text
+https://[your-domain]/?name=[Invitee Name]
 ```
 
-This will place the ui components in the `src/components` directory.
-
-## Using components
-
-To use the components in your app, import them as follows:
-
-```tsx
-import { Button } from "@/components/ui/button"
-```
+**Example:**
+If you want to send an invitation to "Nguyễn Văn A", you would create a link like this (note that spaces will be converted to `%20` in the URL, but you can type them normally in the browser or use an encode function):
+> [https://jackphat-graduation-invitation.vercel.app/?name=Nguyễn Văn A](https://jackphat-graduation-invitation.vercel.app/?name=Nguy%E1%BB%85n%20Văn%20A)
