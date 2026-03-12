@@ -14,41 +14,6 @@ export function App() {
   )
 
   useEffect(() => {
-    const pageTitle = `Thư mời dự lễ tốt nghiệp - ${name} | Đại học Sài Gòn`
-    const description = `Trân trọng kính mời ${name} tham dự lễ tốt nghiệp tại Trường Đại học Sài Gòn. Thời gian: 13:30 ngày 14/03/2026.`
-    const url = window.location.href
-
-    document.title = pageTitle
-
-    const upsertMetaByName = (metaName: string, content: string) => {
-      let tag = document.querySelector<HTMLMetaElement>(`meta[name="${metaName}"]`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("name", metaName)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
-
-    const upsertMetaByProperty = (property: string, content: string) => {
-      let tag = document.querySelector<HTMLMetaElement>(`meta[property="${property}"]`)
-      if (!tag) {
-        tag = document.createElement("meta")
-        tag.setAttribute("property", property)
-        document.head.appendChild(tag)
-      }
-      tag.setAttribute("content", content)
-    }
-
-    upsertMetaByName("description", description)
-    upsertMetaByProperty("og:title", pageTitle)
-    upsertMetaByProperty("og:description", description)
-    upsertMetaByProperty("og:url", url)
-    upsertMetaByName("twitter:title", pageTitle)
-    upsertMetaByName("twitter:description", description)
-  }, [name])
-
-  useEffect(() => {
     const audio = new Audio("/song.mp3")
     audio.loop = true
     audio.volume = 0.45
@@ -86,7 +51,7 @@ export function App() {
 
   return (
     <div
-      className="relative h-svh overflow-hidden"
+      className="relative h-svh 2xl:overflow-hidden"
       style={{
         background:
           "linear-gradient(135deg, #fdf6e3 0%, #fef9ee 50%, #fdf0d0 100%)",
