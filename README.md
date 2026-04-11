@@ -25,3 +25,6 @@ https://[your-domain]/?name=[Invitee Name]
 **Example:**
 If you want to send an invitation to "Nguyễn Văn A", you would create a link like this (note that spaces will be converted to `%20` in the URL, but you can type them normally in the browser or use an encode function):
 > [https://jackphat-graduation-invitation.vercel.app/?name=Nguyễn Văn A](https://jackphat-graduation-invitation.vercel.app/?name=Nguy%E1%BB%85n%20Văn%20A)
+
+
+If you find this project helpful, feel free to leave a ⭐ — it really helps! [![GitHub stars](https://img.shields.io/github/stars/PhatJack/graduation-invitation?style=social)](https://github.com/PhatJack/graduation-invitation)
